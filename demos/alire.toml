@@ -1,0 +1,18 @@
+name = "demos"
+description = "Demos for the NEORV32"
+version = "0.1.0-dev"
+
+authors = ["Olivier Henley"]
+maintainers = ["Olivier Henley <olivier.henley@gmail.com>"]
+maintainers-logins = ["ohenley"]
+licenses = "MIT OR Apache-2.0 WITH LLVM-exception"
+website = "https://github.com/GNAT-Academic-Program/neorv32_hal"
+tags = ["embedded", "nostd", "neorv32", "drivers", "hal", "fpga"]
+
+executables = ["bios"]
+
+[[depends-on]]
+neorv32_hal = "*"
+
+[[pins]]
+neorv32_hal = { path = ".." } 

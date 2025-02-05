@@ -1,0 +1,17 @@
+name = "neorv32_hal"
+description = "Drivers and HAL for the NEORV32"
+version = "0.1.0-dev"
+
+authors = ["Olivier Henley"]
+maintainers = ["Olivier Henley <olivier.henley@gmail.com>"]
+maintainers-logins = ["ohenley"]
+licenses = "MIT OR Apache-2.0 WITH LLVM-exception"
+website = "https://github.com/GNAT-Academic-Program/neorv32_hal"
+tags = ["embedded", "nostd", "neorv32", "drivers", "hal", "fpga"]
+
+[[depends-on]]
+gnat_riscv64_elf = "*"
+bare_runtime = "*"
+
+[gpr-set-externals]
+BARE_RUNTIME_SWITCHES = "-march=rv32i_zicsr_zifencei -mabi=ilp32"

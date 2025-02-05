@@ -1,5 +1,7 @@
 # neorv32_hal
 
+A blog post explaining this project can be found here: [Open Source Ada from Gateware to Application](https://blog.adacore.com/open-source-ada-from-gateware-to-application)
+
 <p align="center">
   <img src="https://github.com/GNAT-Academic-Program/neorv32_hal/blob/main/neorv32_ada.png?raw=true" alt="Header Image" style="width: 65%; height: auto;">
 </p>

@@ -4,7 +4,7 @@
   <img src="https://github.com/GNAT-Academic-Program/neorv32_hal/blob/main/neorv32_ada.png?raw=true" alt="Header Image" style="width: 65%; height: auto;">
 </p>
 
-## Build the NeoRV32 Bitstream
+## Build the neorv32 Bitstream
 
 1. **Install Docker (if not already installed):**
    ```bash
@@ -65,13 +65,13 @@
    fujprog ../../neorv32-setups/osflow/neorv32_ULX3S_MinimalBoot.bit
    ```
 
-Now the NeoRV32 SoC is on your ULX3S dev board. Next, build and prepare the BIOS demo to familiarize yourself with the workflow.
+Now the neorv32 SoC is on your ULX3S dev board. Next, build and prepare the BIOS demo to familiarize yourself with the workflow.
 
 ---
 
-## Set Up the NeoRV32 Bootloader Tools
+## Set Up the neorv32 Bootloader Tools
 
-1. **Compile `image_gen` (bundled with NeoRV32):**
+1. **Compile `image_gen` (bundled with neorv32):**
    ```bash
    cd ~/neorv32_workspace/neorv32-setups/neorv32/sw/image_gen
    gcc image_gen.c -o image_gen
@@ -122,7 +122,7 @@ Now the NeoRV32 SoC is on your ULX3S dev board. Next, build and prepare the BIOS
 
 ---
 
-## Upload the Firmware to the NeoRV32 Bootloader
+## Upload the Firmware to the neorv32 Bootloader
 
 1. **Install a serial terminal for raw file transfers (e.g., gtkterm):**
    ```bash
@@ -160,9 +160,9 @@ And voila!
       for Runtime ("Ada") use Bare_Runtime'Runtime ("Ada");
 
       package Linker is
-         for Switches ("Ada") use ("-T", Neorv32_Hal'Project_Dir & "/src/link.ld");
+         for Switches ("Ada") use ("-T", neorv32_Hal'Project_Dir & "/src/link.ld");
       end Linker;
    end Your_Project;
    ```
 
-That’s it! You now have everything you need to generate the bitstream, program your FPGA, and start developing NeoRV32-based Ada projects. Happy hacking! 🚀
+That’s it! You now have everything you need to generate the bitstream, program your FPGA, and start developing neorv32-based Ada projects. Happy hacking! 🚀

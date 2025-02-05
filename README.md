@@ -1,7 +1,3 @@
-Below is your updated README with improved clarity and consistency:
-
----
-
 # neorv32_hal
 
 <p align="center">

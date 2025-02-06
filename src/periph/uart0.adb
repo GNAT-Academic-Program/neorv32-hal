@@ -47,18 +47,6 @@ package body Uart0 is
    end Write_TX;
    pragma Inline (Write_TX);
 
-   --  procedure Write_TX (Value : UInt32) is
-   --     UART_TX : UInt32 with Volatile, Address => UART0_Periph.DATA'Address;
-   --  begin
-   --     UART_TX := Value;
-   --  end Write_TX;
-   --  pragma Inline (Write_TX);
-
-   --  procedure Uart_Write (C : Character) is
-   --  begin
-   --     Write_TX (Character'Pos (C));
-   --  end Uart_Write;
-
    procedure Put_Char (C : Interfaces.C.char) with
      Export, Convention => C, External_Name => "putchar";
 
@@ -67,7 +55,6 @@ package body Uart0 is
       while UART0_Periph.CTRL.UART_CTRL_TX_FULL = 1 loop
          null;
       end loop;
-      --Uart_Write (Interfaces.C.To_Ada (C));
       Write_TX (Interfaces.C.To_Ada (C));
    end Put_Char;
 

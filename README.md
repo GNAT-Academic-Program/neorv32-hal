@@ -30,13 +30,25 @@ A blog post explaining this project can be found here: [Open Source Ada from Gat
 5. **Clone `neorv32-setups` (with submodules):**
    ```bash
    git clone --recurse-submodules https://github.com/stnolting/neorv32-setups.git
-   cd neorv32-setups/osflow
    ```
-6. **Build the default SoC with minimal boot:**
+6. **(IMPORTANT): Modify the top-level VHDL file to adjust memory sizes for our BIOS firmware**  
    ```bash
+   apt-get update && apt-get install nano
+   nano neorv32-setups/osflow/board_tops/neorv32_ULX3S_BoardTop_MinimalBoot.vhd
+   ```  
+   Change the IMEM and DMEM lines to:  
+   ```
+   MEM_INT_IMEM_SIZE => 32*1024,
+   MEM_INT_DMEM_SIZE => 16*1024
+   ```
+
+7. **Build the default SoC with minimal boot:**  
+   ```bash
+   cd neorv32-setups/osflow
    make BOARD=ULX3S MinimalBoot
    ```
-7. **Quit the container:**
+
+8. **Quit the container:**  
    ```bash
    exit
    ```

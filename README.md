@@ -111,11 +111,13 @@ Now the neorv32 SoC is on your ULX3S dev board. Next, build and prepare the BIOS
 
 ## Build the Ada Demos Firmware (BIOS)
 
-1. **Move back to the root of your workspace:**
+1. **[Install Alire](https://alire.ada.dev/), the Ada package manager**
+
+2. **Move back to the root of your workspace:**
    ```bash
    cd ~/neorv32_workspace
    ```
-2. **Clone the repository from GitHub:**
+3. **Clone the repository from GitHub:**
    ```bash
    git clone https://github.com/GNAT-Academic-Program/neorv32_hal
    ```
@@ -123,12 +125,12 @@ Now the neorv32 SoC is on your ULX3S dev board. Next, build and prepare the BIOS
    ```bash
    alr get neorv32_hal
    ```
-3. **Build using Alire:**
+4. **Build using Alire:**
    ```bash
    cd neorv32_hal*/demos
    alr build
    ```
-4. **Convert and package the firmware:**
+5. **Convert and package the firmware:**
    ```bash
    riscv64-elf-objcopy -O binary bin/bios bin/bios.bin
    image_gen -app_bin bin/bios.bin bin/bios.exe

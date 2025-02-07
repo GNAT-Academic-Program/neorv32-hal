@@ -6,7 +6,7 @@ A blog post explaining this project can be found here: [Open Source Ada from Gat
   <img src="https://github.com/GNAT-Academic-Program/neorv32_hal/blob/main/neorv32_ada.png?raw=true" alt="Header Image" style="width: 65%; height: auto;">
 </p>
 
-## Build the neorv32 Bitstream
+## Build the neorv32 Bitstream (for ULX3S dev board)
 
 1. **Install Docker (if not already installed):**
    ```bash

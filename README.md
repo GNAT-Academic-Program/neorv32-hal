@@ -125,7 +125,7 @@ Now the neorv32 SoC is on your ULX3S dev board. Next, build and prepare the BIOS
    ```
 3. **Build using Alire:**
    ```bash
-   cd neorv32_hal/demos
+   cd neorv32_hal*/demos
    alr build
    ```
 4. **Convert and package the firmware:**

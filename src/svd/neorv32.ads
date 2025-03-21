@@ -19,6 +19,7 @@ package neorv32 is
    type UInt32 is new Interfaces.Unsigned_32;
    type UInt16 is new Interfaces.Unsigned_16;
    type Byte is new Interfaces.Unsigned_8;
+   subtype UInt8 is Byte;
    type Bit is mod 2**1
      with Size => 1;
    type UInt2 is mod 2**2

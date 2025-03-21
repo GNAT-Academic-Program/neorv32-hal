@@ -4,12 +4,13 @@ with Ada.Characters.Handling; use Ada.Characters.Handling;
 with neorv32.UART0;
 with neorv32;
 with Uart0;
+with Random;
 
 with Sysinfo;
 
 package body Bios_Core is
 
-   type Cmd_T is (Echo, Infos, Reload, Help, Unknown);
+   type Cmd_T is (Echo, Infos, Reload, Help, Number, Unknown);
    Cmd : Cmd_T := Unknown;
 
    Cyan      : constant String := ASCII.ESC & "[38;2;0;255;255m";
@@ -41,6 +42,7 @@ package body Bios_Core is
       Put_Line (" e: Echo your input");
       Put_Line (" i: System Infos.");
       Put_Line (" h: Help on commands.");
+      Put_Line (" n: Random Number.");
       Put_Line (" r: Reload the program.");
       Put_Line ("======================================");
       Show_Choice_Prompt;
@@ -72,6 +74,13 @@ package body Bios_Core is
       Put_Line ("Unknown command! 'h' for help.");
       Show_Choice_Prompt;
    end Show_Unknown_Command;
+
+   procedure Show_Random_number is
+   begin
+      New_Line;
+      Put_Line ("Random number: " & Random.Random'Image);
+      Show_Choice_Prompt;
+   end Show_Random_number;
 
    procedure Parse_Cmd (Hart : Harts_T; Trap_Code : Trap_Code_T) is
       pragma Unreferenced (Hart);
@@ -112,6 +121,9 @@ package body Bios_Core is
                   when Help =>
                      New_Line;
                      Show_Menu;
+                  when Number =>
+                     New_Line;
+                     Show_Random_number;
                   when others =>
                      Show_Unknown_Command;
                end case;

@@ -48,11 +48,6 @@ A blog post explaining this project can be found here: [Open Source Ada from Gat
    make BOARD=ULX3S MinimalBoot
    ```
 
-8. **Quit the container:**  
-   ```bash
-   exit
-   ```
-
 ---
 
 ## Program Your ULX3S FPGA Board Using Fujprog

@@ -30,8 +30,11 @@ OUTPUT_ARCH("riscv")
 ENTRY(_start);
 
 MEMORY
-{
-  rom (rx) : ORIGIN = 0x0, LENGTH = 0x8000
+{ /* As an uploadable app: */
+  /* rom (rx) : ORIGIN = 0x0, LENGTH = 0x8000 */
+
+  /* As a bootloader app: */
+  rom (rx) : ORIGIN = 0xFFE00000, LENGTH = 0x8000
   ram (rwx) : ORIGIN = 0x80000000, LENGTH = 0x4000
 }
 

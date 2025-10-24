@@ -1,11 +1,11 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Characters.Handling; use Ada.Characters.Handling;
 
+with Neorv32_Hal_Config;
+
 with neorv32.UART0;
 with neorv32;
 with Uart0;
-
-with Sysinfo;
 
 package body Bios_Core is
 
@@ -62,7 +62,7 @@ package body Bios_Core is
    procedure Show_Infos is
    begin
       New_Line;
-      Put_Line ("Main Clock Frequency: " & Sysinfo.Clk'Image);
+      Put_Line ("Main Clock Frequency: " & Neorv32_Hal_Config.Clk'Image);
       Show_Choice_Prompt;
    end Show_Infos;
 

@@ -31,7 +31,7 @@ ENTRY(_start);
 
 MEMORY
 { /* As an uploadable app: */
-  rom (rx) : ORIGIN = 0x0, LENGTH = 0x8000
+  rom (rx) : ORIGIN = 0x0, LENGTH = 0x10000
 
   /* As a bootloader app: */
   /*rom (rx) : ORIGIN = 0xFFE00000, LENGTH = 0x8000 */

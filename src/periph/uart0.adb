@@ -4,7 +4,8 @@ with Ada.Text_IO; use Ada.Text_IO;
 with neorv32; use neorv32;
 with neorv32.UART0; use neorv32.UART0;
 
-with Sysinfo; use Sysinfo;
+--with Sysinfo; use Sysinfo;
+with Neorv32_Hal_Config; use Neorv32_Hal_Config;
 
 with RISCV.CSR; use RISCV.CSR;
 

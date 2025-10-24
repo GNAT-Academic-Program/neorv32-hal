@@ -15,3 +15,6 @@ bare_runtime = "*"
 
 [gpr-set-externals]
 BARE_RUNTIME_SWITCHES = "-march=rv32i_zicsr_zifencei -mabi=ilp32"
+
+[configuration.variables]
+clk = {type = "Integer", first = 0, last = 200000000, default = 100000000}

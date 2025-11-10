@@ -4,12 +4,13 @@ with Ada.Characters.Handling; use Ada.Characters.Handling;
 with neorv32.UART0;
 with neorv32;
 with Uart0;
-
+with MPU6050Driver; use MPU6050Driver;
+with SPI; use SPI;
 with Sysinfo;
 
 package body Bios_Core is
 
-   type Cmd_T is (Echo, Infos, Reload, Help, Unknown);
+   type Cmd_T is (Echo, Infos, Reload, Help, Unknown, SPI_Demo);
    Cmd : Cmd_T := Unknown;
 
    Cyan      : constant String := ASCII.ESC & "[38;2;0;255;255m";
@@ -42,6 +43,7 @@ package body Bios_Core is
       Put_Line (" i: System Infos.");
       Put_Line (" h: Help on commands.");
       Put_Line (" r: Reload the program.");
+      Put_Line (" s: start SPI demo.");
       Put_Line ("======================================");
       Show_Choice_Prompt;
    end Show_Menu;
@@ -80,6 +82,7 @@ package body Bios_Core is
       use neorv32;
       Choice : Character;
       Command : Cmd_T := Unknown;
+      SPI_Enabled : Bit;
    begin
       loop
          if UART0_Periph.CTRL.UART_CTRL_RX_NEMPTY = 1 then
@@ -112,6 +115,18 @@ package body Bios_Core is
                   when Help =>
                      New_Line;
                      Show_Menu;
+                  when SPI_Demo =>
+                     New_Line;
+                     Put_Line ("Starting SPI demo...");
+                     SPI_Enabled := SPI.Check_Enabled;
+                     if SPI_Enabled = 1 then
+                        Put_Line ("SPI peripheral is enabled.");
+                        
+                        Init_MPU6050;
+                        Put_Line (Read_MPU6050 (16#75#)'Image);
+                     else
+                        Put_Line ("SPI peripheral not enabled!");
+                     end if;
                   when others =>
                      Show_Unknown_Command;
                end case;

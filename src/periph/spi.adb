@@ -16,7 +16,7 @@ package body Spi is
       Clock_Phase : Boolean := False)
    is
    Reset : UInt32 with Volatile, Address => SPI_Periph.CTRL'Address;
-   Clk_Prescaler : Natural := 1 / Clk;
+   CLK_Pre_Cdiv : Clk_Prescaler_Cdiv;
    begin
       if(Clock_Frequency > Clk / 4) then
          raise Constraint_Error with "SPI clock frequency too high";
@@ -40,7 +40,52 @@ package body Spi is
          SPI_Periph.CTRL.SPI_CTRL_CPHA := 0;
       end if;
 
+      CLK_Pre_Cdiv := Get_Clk_Prescaler(Clock_Frequency);
+      SPI_Periph.CTRL.SPI_CTRL_PRSC := CLK_Pre_Cdiv.Prescaler;
+      SPI_Periph.CTRL.SPI_CTRL_CDIV := CLK_Pre_Cdiv.Cdiv;
+
+      SPI_Periph.CTRL.SPI_CTRL_EN := 1;
+
    end Init;
+
+   function Transfer (Send : Byte) return Byte is
+      TX, RX : UInt32;
+   begin
+      -- Combine command=0 (bit31=0) with data byte
+      TX := UInt32(Send) and 16#FF#;
+
+      -- Write full 32-bit word to trigger transfer
+      SPI_Periph.DATA := (SPI_DATA => Send,
+                        Reserved_8_30 => 0,
+                        SPI_DATA_CMD  => 0);
+
+      -- Wait until transfer finishes
+      while SPI_Periph.CTRL.SPI_CTRL_BUSY = 1 loop
+         null;
+      end loop;
+
+      -- Read back RX data
+      RX := UInt32(SPI_Periph.DATA.SPI_DATA);
+      return Byte(RX and 16#FF#);
+   end Transfer;
+
+   function Check_Enabled return Bit is
+   begin
+      return SPI_Periph.CTRL.SPI_CTRL_EN;
+   end Check_Enabled;
+
+   procedure CS_Enable_Only (enable : UInt3) is 
+      begin
+      SPI_Periph.DATA := (SPI_DATA => 16#08#,
+                        Reserved_8_30 => 0,
+                        SPI_DATA_CMD  => 1);
+      end CS_Enable_Only;
+   
+   procedure CS_Disable_All is 
+      begin
+      SPI_Periph.DATA.SPI_DATA_CMD := 1;
+      SPI_Periph.DATA.SPI_DATA := Byte(SPI_Periph.DATA.SPI_DATA and 16#F7#);
+      end CS_Disable_All;
 
    function Get_Clk_Prescaler (Clock_Frequency : Natural) return Clk_Prescaler_Cdiv is
    error : Integer := Integer'last;

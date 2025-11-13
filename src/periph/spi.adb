@@ -1,12 +1,7 @@
-with Interfaces.C; use Interfaces.C;
-with Ada.Text_IO; use Ada.Text_IO;
-
 with neorv32; use neorv32;
 with neorv32.SPI; use neorv32.SPI;
 
 with Sysinfo; use Sysinfo;
-
-with RISCV.CSR; use RISCV.CSR;
 
 package body Spi is
 
@@ -18,6 +13,8 @@ package body Spi is
    Reset : UInt32 with Volatile, Address => SPI_Periph.CTRL'Address;
    CLK_Pre_Cdiv : Clk_Prescaler_Cdiv;
    begin
+
+      -- SPI clock frequency has constraints based on the main clock given by the neorv32 datasheet
       if(Clock_Frequency > Clk / 4) then
          raise Constraint_Error with "SPI clock frequency too high";
       end if;
@@ -51,10 +48,10 @@ package body Spi is
    function Transfer (Send : Byte) return Byte is
       TX, RX : UInt32;
    begin
-      -- Combine command=0 (bit31=0) with data byte
+
       TX := UInt32(Send) and 16#FF#;
 
-      -- Write full 32-bit word to trigger transfer
+      -- All the data must be written at once to the Data register otherwise it will do seperate transfers
       SPI_Periph.DATA := (SPI_DATA => Send,
                         Reserved_8_30 => 0,
                         SPI_DATA_CMD  => 0);
@@ -88,13 +85,15 @@ package body Spi is
       end CS_Disable_All;
 
    function Get_Clk_Prescaler (Clock_Frequency : Natural) return Clk_Prescaler_Cdiv is
+   -- The SPI clock frequency is based off two variables, the prescaler and the clock divider
+   -- To find the best prescaler and clock divider for a given frequency, we do a search
    error : Integer := Integer'last;
    best_result : Clk_Prescaler_Cdiv;
    begin
    for Prescaler in 0 .. 7 loop
       for Cdiv in 0 .. 15 loop
          declare
-            actual_freq : Natural := Clk / (2*(2 ** (Prescaler) * ((2**Cdiv) + 1)));
+            actual_freq : Natural := Clk / (2*(2**(Prescaler+1) * (Cdiv + 1)));
             freq_error : Integer := Integer(Clock_Frequency) - Integer(actual_freq);
          begin
             if freq_error < 0 then

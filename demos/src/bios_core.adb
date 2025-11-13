@@ -122,8 +122,8 @@ package body Bios_Core is
                      if SPI_Enabled = 1 then
                         Put_Line ("SPI peripheral is enabled.");
                         
-                        Init_MPU6050;
-                        Put_Line (Read_MPU6050 (16#75#)'Image);
+                        Init_MPU6000;
+                        Put_Line (Read_MPU6000 (16#75#)'Image);
                      else
                         Put_Line ("SPI peripheral not enabled!");
                      end if;
